@@ -1,0 +1,21 @@
+.discovery {
+    flex-direction: column;
+}
+.discovery::before {
+    content: 'Jora sandbox';
+    display: block;
+    position: relative;
+    z-index: 10;
+    padding: 4px 10px;
+    background: #4396b9;
+    color: white;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .5);
+    font-size: 11px;
+    letter-spacing: 8px;
+}
+.discovery-content {
+    padding: 0;
+}
+.discovery-content-badges {
+    display: none;
+}
