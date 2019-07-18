@@ -4,7 +4,21 @@
     height: 100%;
 }
 .page-default > * {
-    width: 34%;
+    flex-grow: 1;
+    width: 28px;
+    transition: all .35s;
+}
+.page-default > * > :not(.section-toggle) {
+    transition-property: opacity, visibility;
+    transition-duration: .35s;
+}
+.page-default > .section-collapsed {
+    flex-grow: 0;
+}
+.page-default > .section-collapsed > :not(.section-toggle) {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .page-default > .input-data,
@@ -17,22 +31,51 @@
     overflow: visible;
 }
 
-.page-default > .input-data::before,
-.page-default > .output-data::before {
-    content: 'Input';
+.page-default .section-toggle {
     position: absolute;
     z-index: 100;
     top: 4px;
-    right: 8px;
+    right: 25px;
     background: rgba(0, 0, 0, .5);
     color: white;
     padding: 2px 10px;
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    transform-origin: calc(100% + 11px) 50%;
+    transition: transform .25s ease-in-out;
+    cursor: pointer;
 }
-.page-default > .output-data::before {
-    content: 'Output';
+.page-default .section-collapsed .section-toggle {
+    transform: rotate(-90deg);
+}
+.page-default .section-toggle::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -21px;
+    width: 20px;
+    height: 20px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M 3.71875 7.78125 L 2.28125 9.21875 L 11.28125 18.21875 L 12 18.90625 L 12.71875 18.21875 L 21.71875 9.21875 L 20.28125 7.78125 L 12 16.0625 Z '/%3E%3C/svg%3E%0A") no-repeat center;
+    background-color: rgba(0, 0, 0, .5);
+    background-size: 12px;
+    transition: transform .3s ease-out;
+}
+.page-default .section-toggle:hover,
+.page-default .section-toggle:hover::after {
+    background-color: rgba(0, 0, 0, .65);
+}
+.page-default .input-data > .section-toggle::after {
+    transform: rotate(90deg);
+}
+.page-default .output-data > .section-toggle::after {
+    transform: rotate(-90deg);
+}
+.page-default .input-data.section-collapsed > .section-toggle::after {
+    transform: rotate(0deg);
+}
+.page-default .output-data.section-collapsed > .section-toggle::after {
+    transform: rotate(-180deg);
 }
 
 .page-default > .input-data.dragover::after {
@@ -58,6 +101,7 @@
     overflow: auto;
 }
 .page-default > .input-data > .input-data-actions {
+    white-space: nowrap;
     padding: 4px;
     font-size: 12px;
 }
@@ -119,4 +163,32 @@
 }
 .discovery-editor .CodeMirror-scroll {
     height: calc(100% - 18px);
+}
+
+@media (max-width: 850px) {
+    .page-default {
+        flex-direction: column;
+    }
+    .page-default > * {
+        width: auto;
+        height: 28px;
+    }
+    .page-default .section-collapsed .section-toggle {
+        transform: none;
+    }
+    .page-default .input-data > .section-toggle::after {
+        transform: rotate(180deg);
+    }
+    .page-default .output-data > .section-toggle::after {
+        transform: none;
+    }
+    .page-default .input-data.section-collapsed > .section-toggle::after {
+        transform: rotate(0deg);
+    }
+    .page-default .output-data.section-collapsed > .section-toggle::after {
+        transform: rotate(-180deg);
+    }
+    .discovery-editor .CodeMirror {
+        border-width: 1px 0;
+    }
 }

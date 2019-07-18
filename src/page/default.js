@@ -1,6 +1,38 @@
 /* eslint-env browser */
 /* global discovery, jora */
 
+function createElement(tag, attrs, children) {
+    const el = document.createElement(tag);
+
+    if (typeof attrs === 'string') {
+        attrs = {
+            class: attrs
+        };
+    }
+
+    for (let attrName in attrs) {
+        if (attrName.startsWith('on')) {
+            el.addEventListener(attrName.substr(2), attrs[attrName]);
+        } else {
+            el.setAttribute(attrName, attrs[attrName]);
+        }
+    }
+
+    if (Array.isArray(children)) {
+        children.forEach(child =>
+            el.appendChild(child instanceof Node ? child : createText(child))
+        );
+    } else if (typeof children === 'string') {
+        el.innerHTML = children;
+    }
+
+    return el;
+}
+
+function createText(text) {
+    return document.createTextNode(String(text));
+}
+
 function fuzzyStringCmp(a, b) {
     const startChar = a[0];
     const lastChar = a[a.length - 1];
@@ -46,6 +78,14 @@ function joraSuggestions(query, offset, data, context) {
         console.error(e);
         return;
     }
+}
+
+function createSectionToggle(caption) {
+    const el = createElement('div', 'section-toggle', caption);
+    el.addEventListener('click', () => {
+        el.parentNode.classList.toggle('section-collapsed');
+    });
+    return el;
 }
 
 function loadDataFromEvent(event) {
@@ -96,31 +136,29 @@ function updateOutput() {
 let inputData;
 let query = '';
 let lastQuerySuggestionsStat = null;
-const inputDataEl = document.createElement('div');
-const inputDataStructEl = document.createElement('div');
-const inputDataActionsEl = document.createElement('div');
-const queryEditorEl = document.createElement('div');
-const queryEditorErrorEl = document.createElement('div');
-const outputDataEl = document.createElement('div');
-const outputDataStructEl = document.createElement('div');
 const getQuerySuggestions = (query, offset) => joraSuggestions(query, offset, inputData);
 const queryEditor = new discovery.view.QueryEditor(getQuerySuggestions).on('change', value => {
     query = value;
     updateOutput();
 });
 
-inputDataEl.className = 'input-data';
-inputDataStructEl.className = 'input-data-struct';
-inputDataActionsEl.className = 'input-data-actions';
-outputDataEl.className = 'output-data';
-outputDataStructEl.className = 'output-data-struct';
-queryEditorEl.className = 'query-editor';
-queryEditorErrorEl.className = 'query-editor-error';
-queryEditorEl.appendChild(queryEditor.el);
-outputDataEl.appendChild(outputDataStructEl);
-outputDataEl.appendChild(queryEditorErrorEl);
-inputDataEl.appendChild(inputDataStructEl);
-inputDataEl.appendChild(inputDataActionsEl);
+const inputDataStructEl = createElement('div', 'input-data-struct');
+const inputDataActionsEl = createElement('div', 'input-data-actions');
+const inputDataEl = createElement('div', 'input-data', [
+    createSectionToggle('Input'),
+    inputDataStructEl,
+    inputDataActionsEl
+]);
+const queryEditorEl = createElement('div', 'query-editor', [
+    queryEditor.el
+]);
+const queryEditorErrorEl = createElement('div', 'query-editor-error');
+const outputDataStructEl = createElement('div', 'output-data-struct');
+const outputDataEl = createElement('div', 'output-data', [
+    createSectionToggle('Output'),
+    outputDataStructEl,
+    queryEditorErrorEl
+]);
 
 discovery.view.render(inputDataActionsEl, [
     { view: 'button', data: '{ text: "Open file" }' },
