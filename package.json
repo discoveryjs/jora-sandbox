@@ -2,22 +2,14 @@
   "name": "jora-sandbox",
   "version": "0.0.0",
   "description": "Sandbox for Jora (a JSON query language)",
-  "keywords": [],
-  "homepage": "https://github.com/discoveryjs/jora-sandbox",
-  "author": "Roman Dvornov <rdvornov@gmail.com> (https://github.com/lahmatiy)",
-  "maintainers": [
-    {
-      "name": "Roman Dvornov",
-      "email": "rdvornov@gmail.com",
-      "github-username": "lahmatiy"
-    }
-  ],
+  "author": "Roman Dvornov <rdvornov@gmail.com>",
   "license": "MIT",
   "repository": "discoveryjs/jora-sandbox",
-  "bugs": {
-    "url": "https://github.com/discoveryjs/jora-sandbox/issues"
-  },
-  "main": "./src/index",
+  "keywords": [
+      "jora",
+      "sandbox"
+  ],
+  "main": "./index.js",
   "scripts": {
     "test": "npm run lint",
     "build": "npm run build:docs",
@@ -25,7 +17,6 @@
     "build:docs": "discovery-build -o docs --cleanup"
   },
   "discovery": "src/config.js",
-  "dependencies": {},
   "devDependencies": {
     "@discoveryjs/discovery": "^1.0.0-beta.21",
     "@discoveryjs/cli": "^1.1.1",
@@ -38,6 +29,6 @@
   },
   "files": [
     "dist",
-    "src"
+    "index.js"
   ]
 }

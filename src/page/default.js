@@ -82,9 +82,9 @@ function joraSuggestions(query, offset, data, context) {
 
 function createSectionToggle(caption) {
     const el = createElement('div', 'section-toggle', caption);
-    el.addEventListener('click', () => {
-        el.parentNode.classList.toggle('section-collapsed');
-    });
+    el.addEventListener('click', () =>
+        el.parentNode.classList.toggle('section-collapsed')
+    );
     return el;
 }
 
@@ -134,7 +134,7 @@ function updateOutput() {
 }
 
 let inputData;
-let query = '';
+let query = 'jora-sandbox-query-injection-point'.replace('jora-sandbox-query-injection-point', '');
 let lastQuerySuggestionsStat = null;
 const getQuerySuggestions = (query, offset) => joraSuggestions(query, offset, inputData);
 const queryEditor = new discovery.view.QueryEditor(getQuerySuggestions).on('change', value => {
@@ -197,9 +197,25 @@ discovery.page.define('default', el => {
     ].forEach(view => el.appendChild(view));
 
     updateInput();
-    updateOutput();
+
+    if (query !== queryEditor.getValue()) {
+        queryEditor.setValue(query);
+    } else {
+        updateOutput();
+    }
+
     setTimeout(() => {
         queryEditor.cm.refresh();
         queryEditor.focus();
     }, 10);
 });
+
+const origLoadDataFromUrl = discovery.loadDataFromUrl;
+discovery.loadDataFromUrl = function(...args) {
+    return origLoadDataFromUrl.apply(this, args).then(() => {
+        if (discovery.data !== undefined) {
+            inputData = discovery.data;
+            inputDataActionsEl.hidden = true;
+        }
+    });
+};
