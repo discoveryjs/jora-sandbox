@@ -20,13 +20,16 @@
   "main": "./src/index",
   "scripts": {
     "test": "npm run lint",
-    "build": "discovery-build -o docs --cleanup"
+    "build": "npm run build:docs",
+    "build:dist": "discovery-build -o dist --single-file",
+    "build:docs": "discovery-build -o docs --cleanup"
   },
   "discovery": "src/config.js",
   "dependencies": {},
   "devDependencies": {
     "@discoveryjs/discovery": "^1.0.0-beta.21",
     "@discoveryjs/cli": "^1.1.1",
+    "jora": "1.0.0-alpha.10",
     "eslint": "^6.4.0",
     "mocha": "^5.2.0"
   },

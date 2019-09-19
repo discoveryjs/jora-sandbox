@@ -4,7 +4,7 @@ module.exports = {
     view: {
         basedir: __dirname,
         libs: {
-            jora: '../node_modules/jora/dist/jora.js'
+            jora: '../node_modules/jora/dist/jora.min.js'
         },
         assets: [
             'common.css',
