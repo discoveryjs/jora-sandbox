@@ -1,13 +1,13 @@
 {
   "name": "jora-sandbox",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Sandbox for Jora (a JSON query language)",
   "author": "Roman Dvornov <rdvornov@gmail.com>",
   "license": "MIT",
   "repository": "discoveryjs/jora-sandbox",
   "keywords": [
-      "jora",
-      "sandbox"
+    "jora",
+    "sandbox"
   ],
   "main": "./index.js",
   "scripts": {
