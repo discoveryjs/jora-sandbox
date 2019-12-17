@@ -1,3 +1,8 @@
+## 1.1.0 (December 17, 2019)
+
+- Bumped jora to 1.0.0-alpha.11
+- Bumber discovery to 1.0.0-beta.26
+
 ## 1.0.1 (September 19, 2019)
 
 - Fixed missed file issue
