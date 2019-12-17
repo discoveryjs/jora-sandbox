@@ -1,34 +1,34 @@
 {
-  "name": "jora-sandbox",
-  "version": "1.0.1",
-  "description": "Sandbox for Jora (a JSON query language)",
-  "author": "Roman Dvornov <rdvornov@gmail.com>",
-  "license": "MIT",
-  "repository": "discoveryjs/jora-sandbox",
-  "keywords": [
-    "jora",
-    "sandbox"
-  ],
-  "main": "./index.js",
-  "scripts": {
-    "test": "npm run lint",
-    "build": "npm run build:docs",
-    "build:dist": "discovery-build -o dist --single-file",
-    "build:docs": "discovery-build -o docs --cleanup"
-  },
-  "discovery": "src/config.js",
-  "devDependencies": {
-    "@discoveryjs/discovery": "^1.0.0-beta.21",
-    "@discoveryjs/cli": "^1.1.1",
-    "jora": "1.0.0-alpha.10",
-    "eslint": "^6.4.0",
-    "mocha": "^5.2.0"
-  },
-  "engines": {
-    "node": ">=8.0.0"
-  },
-  "files": [
-    "dist",
-    "index.js"
-  ]
+    "name": "jora-sandbox",
+    "version": "1.0.1",
+    "description": "Sandbox for Jora (a JSON query language)",
+    "author": "Roman Dvornov <rdvornov@gmail.com>",
+    "license": "MIT",
+    "repository": "discoveryjs/jora-sandbox",
+    "keywords": [
+        "jora",
+        "sandbox"
+    ],
+    "main": "./index.js",
+    "scripts": {
+        "test": "npm run lint",
+        "build": "npm run build:docs",
+        "build:dist": "discovery-build -o dist --single-file",
+        "build:docs": "discovery-build -o docs --cleanup"
+    },
+    "discovery": "src/config.js",
+    "devDependencies": {
+        "@discoveryjs/discovery": "^1.0.0-beta.21",
+        "@discoveryjs/cli": "^1.1.1",
+        "jora": "1.0.0-alpha.10",
+        "eslint": "^6.4.0",
+        "mocha": "^5.2.0"
+    },
+    "engines": {
+        "node": ">=8.0.0"
+    },
+    "files": [
+        "dist",
+        "index.js"
+    ]
 }
