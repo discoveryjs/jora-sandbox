@@ -1,7 +1,7 @@
-.discovery {
+.style-boundary-Hs94Xo_O.discovery {
     flex-direction: column;
 }
-.discovery::before {
+.style-boundary-Hs94Xo_O.discovery::before {
     content: 'Jora sandbox';
     display: block;
     position: relative;
@@ -13,9 +13,9 @@
     font-size: 11px;
     letter-spacing: 8px;
 }
-.discovery-content {
+.style-boundary-Hs94Xo_O .discovery-content {
     padding: 0;
 }
-.discovery-content-badges {
+.style-boundary-Hs94Xo_O .discovery-content-badges {
     display: none;
 }

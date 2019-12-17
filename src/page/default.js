@@ -133,7 +133,7 @@ function updateOutput() {
     }, outputData);
 }
 
-let inputData;
+let inputData = { hello: 'world' };
 let query = 'jora-sandbox-query-injection-point'.replace('jora-sandbox-query-injection-point', '');
 let lastQuerySuggestionsStat = null;
 const getQuerySuggestions = (query, offset) => joraSuggestions(query, offset, inputData);
