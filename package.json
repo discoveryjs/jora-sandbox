@@ -11,6 +11,7 @@
     ],
     "main": "./index.js",
     "scripts": {
+        "start": "discovery",
         "test": "npm run lint",
         "build": "npm run build:docs",
         "build:dist": "discovery-build -o dist --single-file",
