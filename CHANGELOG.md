@@ -1,8 +1,8 @@
-## 1.2.1 (May 20, 2019)
+## 1.2.1 (May 20, 2020)
 
 - Fixed data injection
 
-## 1.2.0 (May 20, 2019)
+## 1.2.0 (May 20, 2020)
 
 - Bumped jora to 1.0.0-beta.2
 - Bumber discovery to 1.0.0-beta.38
