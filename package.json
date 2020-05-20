@@ -12,6 +12,7 @@
     "main": "./index.js",
     "scripts": {
         "start": "discovery",
+        "lint": "eslint *.js src",
         "test": "npm run lint",
         "build": "npm run build:docs",
         "build:dist": "discovery-build -o dist --single-file",
@@ -20,11 +21,11 @@
     },
     "discovery": "src/config.js",
     "devDependencies": {
-        "@discoveryjs/discovery": "^1.0.0-beta.26",
-        "@discoveryjs/cli": "^1.4.1",
-        "jora": "1.0.0-alpha.11",
-        "eslint": "^6.4.0",
-        "mocha": "^5.2.0"
+        "@discoveryjs/discovery": "^1.0.0-beta.38",
+        "@discoveryjs/cli": "^1.10.2",
+        "jora": "1.0.0-beta.2",
+        "eslint": "^7.0.0",
+        "mocha": "^6.2.3"
     },
     "engines": {
         "node": ">=8.0.0"
