@@ -10,7 +10,7 @@ function build(data, name, createdAt, query) {
             () => JSON.stringify(query || queryPlaceholder) + '.'
         )
         .replace(
-            /(\.loadDataFromUrl\()\{.+?\}/,
+            /(\.loadDataFromUrl\()[^,]+/,
             (m, mc) => mc + JSON.stringify({
                 name,
                 createdAt,
