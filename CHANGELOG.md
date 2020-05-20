@@ -1,4 +1,4 @@
-## next
+## 1.2.0 (May 20, 2019)
 
 - Bumped jora to 1.0.0-beta.2
 - Bumber discovery to 1.0.0-beta.38
