@@ -1,4 +1,4 @@
-## next
+## 1.2.1 (May 20, 2019)
 
 - Fixed data injection
 

@@ -1,6 +1,6 @@
 {
     "name": "jora-sandbox",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "Sandbox for Jora (a JSON query language)",
     "author": "Roman Dvornov <rdvornov@gmail.com>",
     "license": "MIT",
