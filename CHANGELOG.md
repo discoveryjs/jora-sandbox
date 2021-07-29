@@ -1,3 +1,6 @@
+## next
+
+- Dropped support for Node.js prior 12.0
 ## 1.2.1 (May 20, 2020)
 
 - Fixed data injection
