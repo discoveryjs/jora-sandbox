@@ -16,7 +16,7 @@
         "test": "npm run lint",
         "build": "npm run build:docs",
         "build:dist": "discovery-build -o dist --single-file",
-        "build:docs": "discovery-build -o docs --cleanup",
+        "build:docs": "discovery-build -o docs --clean",
         "prepublishOnly": "npm run build:dist"
     },
     "discovery": "src/config.js",
