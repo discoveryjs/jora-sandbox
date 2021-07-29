@@ -1,4 +1,4 @@
-## next
+## 1.3.0 (July 29, 2021)
 
 - Reworked data injection into html
 - Dropped support for Node.js prior 12.0
