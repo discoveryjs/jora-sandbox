@@ -1,6 +1,9 @@
 ## next
 
 - Dropped support for Node.js prior 12.0
+- Bumped jora to 1.0.0-beta.5
+- Bumped discovery to 1.0.0-beta.61
+
 ## 1.2.1 (May 20, 2020)
 
 - Fixed data injection

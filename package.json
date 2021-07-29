@@ -21,11 +21,11 @@
     },
     "discovery": "src/config.js",
     "devDependencies": {
-        "@discoveryjs/discovery": "^1.0.0-beta.38",
-        "@discoveryjs/cli": "^1.10.2",
-        "jora": "1.0.0-beta.2",
-        "eslint": "^7.0.0",
-        "mocha": "^6.2.3"
+        "@discoveryjs/discovery": "^1.0.0-beta.61",
+        "@discoveryjs/cli": "^2.0.0-beta.12",
+        "jora": "1.0.0-beta.5",
+        "eslint": "^7.31.0",
+        "mocha": "^8.3.2"
     },
     "engines": {
         "node": ">=12.0.0"

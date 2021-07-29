@@ -13,6 +13,9 @@
     font-size: 11px;
     letter-spacing: 8px;
 }
+.discovery-nav {
+    display: none;
+}
 .discovery-content {
     padding: 0;
 }

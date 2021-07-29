@@ -1,5 +1,6 @@
 /* eslint-env browser */
-/* global discovery, jora */
+/* global discovery */
+const jora = require('jora');
 
 function createElement(tag, attrs, children) {
     const el = document.createElement(tag);
