@@ -1,5 +1,6 @@
 ## next
 
+- Reworked data injection into html
 - Dropped support for Node.js prior 12.0
 - Bumped jora to 1.0.0-beta.5
 - Bumped discovery to 1.0.0-beta.61

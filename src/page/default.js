@@ -89,27 +89,6 @@ function createSectionToggle(caption) {
     return el;
 }
 
-function loadDataFromEvent(event) {
-    const source = event.dataTransfer || event.target;
-    const file = source && source.files && source.files[0];
-
-    event.stopPropagation();
-    event.preventDefault();
-
-    if (file.type !== 'application/json') {
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = event => {
-        inputData = JSON.parse(event.target.result);
-
-        updateInput();
-        updateOutput();
-    };
-    reader.readAsText(file);
-}
-
 function updateInput() {
     inputDataStructEl.innerHTML = '';
     discovery.view.render(inputDataStructEl, { view: 'struct', expanded: 1 }, inputData);
@@ -173,10 +152,10 @@ discovery.view.render(inputDataActionsEl, [
 const loadInputFileEl = document.createElement('input');
 loadInputFileEl.type = 'file';
 loadInputFileEl.accept = 'application/json,.json';
-loadInputFileEl.addEventListener('change', e => loadDataFromEvent(e));
+loadInputFileEl.addEventListener('change', e => discovery.loadDataFromEvent(e));
 
 // let removeDragOverState;
-inputDataEl.addEventListener('drop', e => loadDataFromEvent(e), true);
+inputDataEl.addEventListener('drop', e => discovery.loadDataFromEvent(e), true);
 // document.addEventListener('dragenter', e => {
 //     clearTimeout(removeDragOverState);
 //     inputDataEl.classList.add('dragover');
@@ -211,12 +190,12 @@ discovery.page.define('default', el => {
     }, 10);
 });
 
-const origLoadDataFromUrl = discovery.loadDataFromUrl;
-discovery.loadDataFromUrl = function(...args) {
-    return origLoadDataFromUrl.apply(this, args).then(() => {
-        if (discovery.data !== undefined) {
-            inputData = discovery.data;
-            inputDataActionsEl.hidden = true;
-        }
-    });
-};
+discovery.on('data', () => {
+    inputData = discovery.data;
+    inputDataActionsEl.hidden = true;
+});
+
+// This point is using for injecting a code for loading data
+(function(discovery) {
+    'load-data'.replace(discovery);
+}(discovery));
