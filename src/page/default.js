@@ -1,5 +1,3 @@
-/* eslint-env browser */
-/* global discovery */
 const jora = require('jora');
 
 function createElement(tag, attrs, children) {
@@ -65,15 +63,27 @@ function joraSuggestions(query, offset, data, context) {
         suggestions = stat.suggestion(offset);
 
         if (suggestions) {
-            return suggestions
-                .filter(
-                    item => item.value !== item.current && fuzzyStringCmp(item.current, item.value)
-                )
-                .sort((a, b) => {
-                    const at = typeOrder.indexOf(a.type);
-                    const bt = typeOrder.indexOf(b.type);
-                    return at - bt || (a.value < b.value ? -1 : 1);
+            var items = [];
+
+            suggestions.forEach(function(group) {
+                group.suggestions.forEach(function(value) {
+                    if (value !== group.text && fuzzyStringCmp(group.text, value)) {
+                        items.push({
+                            type: group.type,
+                            from: group.from,
+                            to: group.to,
+                            text: group.text,
+                            value: value
+                        });
+                    }
                 });
+            });
+
+            return items.sort((a, b) => {
+                const at = typeOrder.indexOf(a.type);
+                const bt = typeOrder.indexOf(b.type);
+                return at - bt || (a.value < b.value ? -1 : 1);
+            });
         }
     } catch (e) {
         console.error(e);
@@ -81,12 +91,63 @@ function joraSuggestions(query, offset, data, context) {
     }
 }
 
+function createResizer(leftEl, rightEl, containerEl) {
+    const el = createElement('div', 'column-resizer');
+    let startX;
+    let startY;
+    let startLeftSize;
+    let startRightSize;
+    let vertical;
+
+    function onMouseDown(e) {
+        e.preventDefault();
+        vertical = window.matchMedia('(max-width: 850px)').matches;
+        startX = e.clientX;
+        startY = e.clientY;
+        startLeftSize = vertical ? leftEl.offsetHeight : leftEl.offsetWidth;
+        startRightSize = vertical ? rightEl.offsetHeight : rightEl.offsetWidth;
+        el.classList.add('active');
+        containerEl.classList.add('resizing');
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+    }
+
+    function onMouseMove(e) {
+        const delta = vertical ? e.clientY - startY : e.clientX - startX;
+        const newLeft = Math.max(28, startLeftSize + delta);
+        const newRight = Math.max(28, startRightSize - delta);
+        leftEl.style.flex = '0 0 ' + newLeft + 'px';
+        rightEl.style.flex = '0 0 ' + newRight + 'px';
+    }
+
+    function onMouseUp() {
+        el.classList.remove('active');
+        containerEl.classList.remove('resizing');
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+    }
+
+    el.addEventListener('mousedown', onMouseDown);
+    return el;
+}
+
 function createSectionToggle(caption) {
     const el = createElement('div', 'section-toggle', caption);
-    el.addEventListener('click', () =>
-        el.parentNode.classList.toggle('section-collapsed')
-    );
+    el.addEventListener('click', () => {
+        el.parentNode.style.flex = '';
+        el.parentNode.classList.toggle('section-collapsed');
+    });
     return el;
+}
+
+function applyJsonFromClipboard() {
+    navigator.clipboard.readText().then(function(text) {
+        if (text) {
+            discovery.loadDataFromStream(new Blob([text]).stream());
+        }
+    }).catch(function() {
+        // clipboard access denied – silently ignore
+    });
 }
 
 function updateInput() {
@@ -142,12 +203,20 @@ const outputDataEl = createElement('div', 'output-data', [
 
 discovery.view.render(inputDataActionsEl, [
     { view: 'button', data: '{ text: "Open file" }' },
-    // 'text:" or "',
-    // { view: 'button', data: '{ text: "Paste from clipboard" }', onClick: () => alert(1123) },
+    { view: 'button', data: '{ text: "Paste JSON" }', onClick: applyJsonFromClipboard },
     'text:" or drop file here"'
 ]).then(() =>
     inputDataActionsEl.firstElementChild.appendChild(loadInputFileEl)
 );
+
+inputDataEl.setAttribute('tabindex', '0');
+inputDataEl.addEventListener('paste', function(e) {
+    var text = e.clipboardData.getData('text/plain');
+    if (text) {
+        e.preventDefault();
+        discovery.loadDataFromStream(new Blob([text]).stream());
+    }
+});
 
 const loadInputFileEl = document.createElement('input');
 loadInputFileEl.type = 'file';
@@ -170,9 +239,14 @@ inputDataEl.addEventListener('dragover', e => {
 }, true);
 
 discovery.page.define('default', el => {
+    const resizerLeft = createResizer(inputDataEl, queryEditorEl, el);
+    const resizerRight = createResizer(queryEditorEl, outputDataEl, el);
+
     [
         inputDataEl,
+        resizerLeft,
         queryEditorEl,
+        resizerRight,
         outputDataEl
     ].forEach(view => el.appendChild(view));
 
