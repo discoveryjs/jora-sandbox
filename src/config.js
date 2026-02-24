@@ -1,7 +1,7 @@
 module.exports = {
     name: 'Jora Sandbox',
     viewport: 'width=device-width, initial-scale=1',
-    darkmode: false,
+    colorScheme: 'auto',
     view: {
         basedir: __dirname,
         assets: [

@@ -4,8 +4,8 @@
     height: 100%;
 }
 .page-default > * {
-    flex-grow: 1;
-    width: 28px;
+    flex: 1 1 0%;
+    min-width: 28px;
     transition: all .35s;
 }
 .page-default > * > :not(.section-toggle) {
@@ -13,7 +13,7 @@
     transition-duration: .35s;
 }
 .page-default > .section-collapsed {
-    flex-grow: 0;
+    flex: 0 0 28px;
 }
 .page-default > .section-collapsed > :not(.section-toggle) {
     opacity: 0;
@@ -24,7 +24,7 @@
 .page-default > .input-data,
 .page-default > .output-data {
     position: relative;
-    background: #fafafa;
+    background: var(--discovery-background-color, #fafafa);
 }
 .page-default > .input-data .view-struct,
 .page-default > .output-data .view-struct {
@@ -78,6 +78,29 @@
     transform: rotate(-180deg);
 }
 
+.page-default > .column-resizer {
+    flex: 0 0 5px;
+    min-width: 5px;
+    cursor: col-resize;
+    background: var(--discovery-button-border-color, #ddd);
+    transition: background .15s;
+}
+.discovery-root-darkmode .page-default > .column-resizer {
+    background: #1a1a1a;
+}
+.page-default > .column-resizer:hover,
+.page-default.resizing > .column-resizer.active {
+    background: #4396b9;
+}
+.page-default.resizing {
+    cursor: col-resize;
+    user-select: none;
+}
+.page-default.resizing > * {
+    pointer-events: none;
+    transition: none;
+}
+
 .page-default > .input-data.dragover::after {
     content: 'Drop file';
     position: absolute;
@@ -85,7 +108,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, .8);
+    background: var(--discovery-background-color, rgba(255, 255, 255, .8));
+    opacity: 0.9;
     padding-top: 100px;
     text-align: center;
 }
@@ -171,7 +195,20 @@
     }
     .page-default > * {
         width: auto;
-        height: 28px;
+        min-width: auto;
+        min-height: 28px;
+    }
+    .page-default > .section-collapsed {
+        flex: 0 0 28px;
+    }
+    .page-default > .column-resizer {
+        flex: 0 0 5px;
+        min-width: auto;
+        min-height: 5px;
+        cursor: row-resize;
+    }
+    .page-default.resizing {
+        cursor: row-resize;
     }
     .page-default .section-collapsed .section-toggle {
         transform: none;
